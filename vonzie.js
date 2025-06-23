@@ -455,7 +455,57 @@ const info = `${namaOrang}`;
 //=================================================//
 // Command Menu
 //=================================================//
-switch(command) {
+ switch (command) {
+  case '!portal':
+    await sendPortalVonzie(sock, from);
+    
+  // Tambahkan case lainnya jika diperlukan
+   async function sendPortalVonzie(sock, jid) {
+  const msg = generateWAMessageFromContent(jid, {
+    templateMessage: {
+      hydratedTemplate: {
+        hydratedContentText: `
+𐌖Ꝋ𐌍Ɀ𐌉𐌄 𐌄𐌌Ᵽ𐌖𐌓𐌉𐌄 - [ VONZIE SYSTEM ]
+╭─────────────╮
+│   ⚠️  *WARNING LEVEL 9*  ⚠️
+╰─────────────╯
+
+🔰 *System Status:* [🔓UNLOCKED]
+🎮 *Mode:* Hyper Brutal Core
+🧠 *Command:* Anti-boring activated
+
+Pilih tombol aneh di bawah untuk menjelajah dunia ~Vonzie~.
+        `.trim(),
+        hydratedFooterText: 'Vonzie Terminal Access ⚡ 2025',
+        hydratedButtons: [
+          {
+            urlButton: {
+              displayText: '🌐 Portal Resmi',
+              url: 'https://vonzie.network/empire'
+            }
+          },
+          {
+            callButton: {
+              displayText: '📞 Hubungi Kekaisaran',
+              phoneNumber: '+628xxxVonzie'
+            }
+          },
+          {
+            quickReplyButton: {
+              displayText: '🧨 Masuk Mode SiuCalcrick',
+              id: '!siucalcrick'
+            }
+          }
+        ],
+        jpegThumbnail: await (await fetch('https://telegra.ph/file/7ef5641e2288d8be6bd2b.jpg')).buffer()
+      }
+    }
+  }, { userJid: jid });
+
+  await sock.relayMessage(jid, msg.message, { messageId: msg.key.id });
+                                 }
+}
+break
 case 'setmenu': {
   if (!isCreator) return ReplyMulti(mess.owner);
   const selected = args[0]?.toLowerCase();
